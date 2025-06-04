@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>HandART - Chat</title>
+<style>
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    background-color: #f7f2e8;
+    height: 100vh;
+    overflow: hidden;
+  }
+  .sidebar {
+    width: 220px;
+    background-color: #d1b58a;
+    height: 100vh;
+    padding: 2rem 1rem;
+    color: #4a2f14;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .sidebar h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+      .sidebar > h2 > img {
+      height: 150px;
+      margin-top: 5px;
+    }
+  .sidebar > div > a{
+      text-decoration: none;
+      font-weight: bold;
+      color: #4a2f14;
+    }
+  .profile-pic {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #b9975b;
+    background-image: url('https://i.pravatar.cc/100');
+    background-size: cover;
+    background-position: center;
+    margin-bottom: 1.5rem;
+    border: 3px solid #fffaf2;
+    box-shadow: 0 0 8px rgba(0,0,0,0.15);
+  }
+  .menu-item {
+    margin: 0.8rem 0;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+    padding: 0.6rem 0;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+  }
+  .menu-item:hover {
+    background-color: #c3a36d;
+    color: #fffaf2;
+  }
+  .menu-item.active {
+    background-color: #b8975a;
+    color: #fffaf2;
+  }
+
+  .chat-container {
+    margin-left: 220px;
+    display: flex;
+    height: 100vh;
+    width: calc(100% - 220px);
+    background: #fffaf2;
+  }
+
+  .conversations-list {
+    width: 280px;
+    border-right: 1px solid #e1d5b5;
+    overflow-y: auto;
+    background-color: #f7f2e8;
+  }
+  .convo-item {
+    padding: 1rem;
+    border-bottom: 1px solid #e1d5b5;
+    cursor: pointer;
+  }
+  .convo-item.active {
+    background-color: #d1b58a;
+    color: #4a2f14;
+    font-weight: bold;
+  }
+  .convo-item:hover {
+    background-color: #c3a36d;
+    color: #fffaf2;
+  }
+  .convo-name {
+    font-weight: 600;
+  }
+  .convo-last-msg {
+    font-size: 0.9rem;
+    color: #6e5239;
+    margin-top: 0.2rem;
+  }
+
+  .chat-window {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 2rem 120px 2rem; /* bottom padding para espaço do input e botões fixos */
+    position: relative;
+  }
+  .chat-header {
+    border-bottom: 1px solid #e1d5b5;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    color: #4a2f14;
+    font-size: 1.3rem;
+  }
+  .messages {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 10px;
+  }
+  .message {
+    margin-bottom: 1rem;
+    max-width: 65%;
+    padding: 0.6rem 1rem;
+    border-radius: 12px;
+    position: relative;
+    font-size: 1rem;
+    line-height: 1.3;
+  }
+  .message.sent {
+    background-color: #d1b58a;
+    color: #4a2f14;
+    margin-left: auto;
+  }
+  .message.received {
+    background-color: #f0e8d6;
+    color: #4a2f14;
+    margin-right: auto;
+  }
+
+  /* Mensagem negociação */
+  .message.negociacao {
+    border: 2px solid #b8975a;
+    background-color: #fff9e3;
+  }
+  .negociacao-details {
+    margin-bottom: 0.6rem;
+  }
+  .negociacao-buttons {
+    display: flex;
+    gap: 1rem;
+  }
+  .negociacao-buttons button {
+    flex: 1;
+    padding: 6px 0;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .btn-aceitar {
+    background-color: #8cc152;
+    color: white;
+  }
+  .btn-aceitar:hover {
+    background-color: #6aa84f;
+  }
+  .btn-recusar {
+    background-color: #e06666;
+    color: white;
+  }
+  .btn-recusar:hover {
+    background-color: #c0392b;
+  }
+
+  /* Barra inferior fixa */
+  .chat-actions {
+    position: fixed;
+    bottom: 0;
+    left: 220px;
+    width: calc(100% - 220px);
+    background-color: #d1b58a;
+    padding: 0.8rem 2rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.1);
+    z-index: 500;
+  }
+  .chat-actions button {
+    background-color: #b8975a;
+    border: none;
+    color: #fffaf2;
+    padding: 8px 16px;
+    font-weight: 700;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .chat-actions button:hover {
+    background-color: #a08048;
+  }
+  .chat-actions button:disabled {
+    background-color: #e1d5b5;
+    cursor: not-allowed;
+    color: #7a6c5e;
+  }
+
+  /* Popup negociação */
+  .popup-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  .popup {
+    background: #fffaf2;
+    padding: 1.5rem 2rem;
+    border-radius: 12px;
+    width: 320px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    position: relative;
+  }
+  .popup h3 {
+    margin-top: 0;
+    color: #4a2f14;
+  }
+  .popup label {
+    display: block;
+    margin-top: 1rem;
+    font-weight: 600;
+    color: #5a3e1b;
+  }
+  .popup input[type="number"],
+  .popup textarea {
+    width: 100%;
+    padding: 8px 10px;
+    margin-top: 0.4rem;
+    border-radius: 6px;
+    border: 1px solid #c3a36d;
+    font-size: 1rem;
+    font-family: inherit;
+    color: #4a2f14;
+    background: #f7f2e8;
+  }
+  .popup textarea {
+    resize: vertical;
+    min-height: 70px;
+  }
+  .popup-buttons {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+  }
+  .popup-buttons button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .btn-cancelar {
+    background-color: #e06666;
+    color: white;
+  }
+  .btn-cancelar:hover {
+    background-color: #c0392b;
+  }
+  .btn-enviar {
+    background-color: #8cc152;
+    color: white;
+  }
+  .btn-enviar:hover {
+    background-color: #6aa84f;
+  }
+
+  /* Área para enviar mensagem */
+  .send-message-container {
+    position: fixed;
+    bottom: 60px; /* acima da barra de ações */
+    left: 220px;
+    width: calc(100% - 220px);
+    background-color: #f7f2e8;
+    padding: 0.8rem 2rem;
+    display: flex;
+    gap: 0.8rem;
+    box-shadow: 0 -1px 4px rgba(0,0,0,0.1);
+    z-index: 400;
+  }
+  .send-message-container input[type="text"] {
+    flex: 1;
+    padding: 10px 14px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #c3a36d;
+    font-family: inherit;
+  }
+  .send-message-container button {
+    padding: 10px 18px;
+    background-color: #b8975a;
+    border: none;
+    color: #fffaf2;
+    font-weight: 700;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .send-message-container button:hover {
+    background-color: #a08048;
+  }
+  .send-message-container button:disabled {
+    background-color: #e1d5b5;
+    cursor: not-allowed;
+    color: #7a6c5e;
+  }
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+  <h2><img src="logo-removebg-preview.png" alt=""></h2>
+  <div class="profile-pic" title="Foto do perfil"></div>
+  <div class="menu-item"><a href="home.html">Início</a></div>
+  <div class="menu-item"><a href="MeusProdutos.html">Meus Produtos</a></div>
+  <div class="menu-item"><a href="Pedidos.html">Pedidos</a></div>
+  <div class="menu-item"><a href="Perfil.html">Meu Perfil</a></div>
+  <div class="menu-item"><a href="home.html">Sair</a></div>
+</div>
+
+<div class="chat-container">
+  <div class="conversations-list" id="conversationsList">
+    <!-- Conversas -->
+  </div>
+  <div class="chat-window">
+    <div class="chat-header" id="chatHeader">Selecione uma conversa</div>
+    <div class="messages" id="messages"></div>
+  </div>
+</div>
+
+<!-- Enviar mensagem -->
+<div class="send-message-container">
+  <input type="text" id="inputMessage" placeholder="Digite sua mensagem..." disabled />
+  <button id="btnSend" disabled>Enviar</button>
+</div>
+
+<!-- Barra inferior fixa -->
+<div class="chat-actions">
+  <button id="btnNegociar" disabled>Negociar</button>
+  <button id="btnEncerrar" disabled>Encerrar</button>
+</div>
+
+<!-- Popup negociação -->
+<div class="popup-overlay" id="popupOverlay">
+  <div class="popup">
+    <h3>Nova Negociação</h3>
+    <label for="valorInput">Valor (R$):</label>
+    <input type="number" id="valorInput" min="0" step="0.01" />
+    <label for="detalhesInput">Detalhes:</label>
+    <textarea id="detalhesInput"></textarea>
+    <div class="popup-buttons">
+      <button class="btn-cancelar" id="btnCancelar">Cancelar</button>
+      <button class="btn-enviar" id="btnEnviar">Enviar negociação</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Dados simulados de conversas e mensagens
+  const conversations = [
+    {
+      id: 1,
+      name: "Maria Souza",
+      encerrada: false,
+      lastMessage: "Olá! Quero saber mais sobre o produto.",
+      messages: [
+        { id: 1, sender: "received", text: "Olá! Quero saber mais sobre o produto.", type: "text" },
+        { id: 2, sender: "sent", text: "Claro! Em que posso ajudar?", type: "text" }
+      ]
+    },
+    {
+      id: 2,
+      name: "João Carlos",
+      encerrada: false,
+      lastMessage: "Negociação enviada: R$ 150.00",
+      messages: [
+        { id: 1, sender: "received", text: "Gostaria de negociar o preço.", type: "text" },
+        {
+          id: 2,
+          sender: "sent",
+          type: "negociacao",
+          valor: 150,
+          detalhes: "Oferta especial para você",
+          text: "Negociação: R$ 150.00 - Oferta especial para você"
+        }
+      ]
+    },
+    {
+      id: 3,
+      name: "Ana Lima",
+      encerrada: true,
+      lastMessage: "(Conversa encerrada)",
+      messages: [
+        { id: 1, sender: "received", text: "Obrigado pelo atendimento!", type: "text" }
+      ]
+    }
+  ];
+
+  const conversationsListEl = document.getElementById("conversationsList");
+  const chatHeaderEl = document.getElementById("chatHeader");
+  const messagesEl = document.getElementById("messages");
+  const popupOverlay = document.getElementById("popupOverlay");
+  const valorInput = document.getElementById("valorInput");
+  const detalhesInput = document.getElementById("detalhesInput");
+  const btnCancelar = document.getElementById("btnCancelar");
+  const btnEnviar = document.getElementById("btnEnviar");
+  const btnNegociar = document.getElementById("btnNegociar");
+  const btnEncerrar = document.getElementById("btnEncerrar");
+
+  const inputMessage = document.getElementById("inputMessage");
+  const btnSend = document.getElementById("btnSend");
+
+  let currentConversationId = null;
+
+  // Renderiza lista de conversas
+  function renderConversationsList() {
+    conversationsListEl.innerHTML = "";
+    conversations.forEach(conv => {
+      const div = document.createElement("div");
+      div.className = "convo-item" + (conv.id === currentConversationId ? " active" : "");
+      div.dataset.id = conv.id;
+      div.innerHTML = `
+        <div class="convo-name">${conv.name}</div>
+        <div class="convo-last-msg">${conv.lastMessage}</div>
+      `;
+      div.addEventListener("click", () => {
+        if (!conv.encerrada) {
+          currentConversationId = conv.id;
+          renderConversationsList();
+          renderChatWindow();
+          updateActionButtons();
+          updateSendMessageArea();
+        }
+      });
+      conversationsListEl.appendChild(div);
+    });
+  }
+
+  // Renderiza mensagens da conversa atual
+  function renderChatWindow() {
+    if (!currentConversationId) {
+      chatHeaderEl.textContent = "Selecione uma conversa";
+      messagesEl.innerHTML = "";
+      return;
+    }
+    const conv = conversations.find(c => c.id === currentConversationId);
+    chatHeaderEl.textContent = conv.name + (conv.encerrada ? " (Encerrada)" : "");
+    messagesEl.innerHTML = "";
+
+    conv.messages.forEach(msg => {
+      const msgDiv = document.createElement("div");
+      msgDiv.className = "message " + (msg.sender === "sent" ? "sent" : "received");
+
+      if (msg.type === "negociacao") {
+        msgDiv.classList.add("negociacao");
+        msgDiv.innerHTML = `
+          <div class="negociacao-details">
+            <strong>Negociação:</strong><br/>
+            Valor: R$ ${msg.valor.toFixed(2)}<br/>
+            Detalhes: ${msg.detalhes}
+          </div>
+          <div class="negociacao-buttons">
+            <button class="btn-aceitar">Aceitar</button>
+            <button class="btn-recusar">Recusar</button>
+          </div>
+        `;
+        // Eventos dos botões aceitar e recusar
+        const aceitarBtn = msgDiv.querySelector(".btn-aceitar");
+        const recusarBtn = msgDiv.querySelector(".btn-recusar");
+
+        aceitarBtn.addEventListener("click", () => {
+          alert(`Você aceitou a negociação de R$ ${msg.valor.toFixed(2)}.`);
+          // Poderia atualizar estado da negociação aqui
+        });
+        recusarBtn.addEventListener("click", () => {
+          alert(`Você recusou a negociação de R$ ${msg.valor.toFixed(2)}.`);
+          // Poderia atualizar estado da negociação aqui
+        });
+      } else {
+        msgDiv.textContent = msg.text;
+      }
+
+      messagesEl.appendChild(msgDiv);
+    });
+
+    // Scroll automático para a última mensagem
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
+  // Atualiza estado dos botões negociar, encerrar e input/enviar
+  function updateActionButtons() {
+    if (!currentConversationId) {
+      btnNegociar.disabled = true;
+      btnEncerrar.disabled = true;
+      inputMessage.disabled = true;
+      btnSend.disabled = true;
+      return;
+    }
+    const conv = conversations.find(c => c.id === currentConversationId);
+    if (conv.encerrada) {
+      btnNegociar.disabled = true;
+      btnEncerrar.disabled = true;
+      inputMessage.disabled = true;
+      btnSend.disabled = true;
+    } else {
+      btnNegociar.disabled = false;
+      btnEncerrar.disabled = false;
+      inputMessage.disabled = false;
+      btnSend.disabled = false;
+    }
+  }
+
+  function updateSendMessageArea() {
+    if (!currentConversationId) {
+      inputMessage.value = "";
+      inputMessage.disabled = true;
+      btnSend.disabled = true;
+    } else {
+      const conv = conversations.find(c => c.id === currentConversationId);
+      if (conv.encerrada) {
+        inputMessage.value = "";
+        inputMessage.disabled = true;
+        btnSend.disabled = true;
+      } else {
+        inputMessage.disabled = false;
+        btnSend.disabled = false;
+      }
+    }
+  }
+
+  // Abrir popup negociar
+  function openNegociarPopup() {
+    valorInput.value = "";
+    detalhesInput.value = "";
+    popupOverlay.style.display = "flex";
+  }
+
+  // Fechar popup negociar
+  btnCancelar.addEventListener("click", () => {
+    popupOverlay.style.display = "none";
+  });
+
+  // Enviar negociação
+  btnEnviar.addEventListener("click", () => {
+    const valor = parseFloat(valorInput.value);
+    const detalhes = detalhesInput.value.trim();
+
+    if (isNaN(valor) || valor <= 0) {
+      alert("Por favor, informe um valor válido maior que zero.");
+      return;
+    }
+    if (!detalhes) {
+      alert("Por favor, informe os detalhes da negociação.");
+      return;
+    }
+
+    const conv = conversations.find(c => c.id === currentConversationId);
+    const novaMsg = {
+      id: conv.messages.length + 1,
+      type: "negociacao",
+      sender: "sent",
+      valor,
+      detalhes,
+      text: `Negociação: R$ ${valor.toFixed(2)} - ${detalhes}`
+    };
+    conv.messages.push(novaMsg);
+    conv.lastMessage = `Negociação enviada: R$ ${valor.toFixed(2)}`;
+
+    popupOverlay.style.display = "none";
+    renderChatWindow();
+    renderConversationsList();
+  });
+
+  // Botão negociar
+  btnNegociar.addEventListener("click", () => {
+    openNegociarPopup();
+  });
+
+  // Botão encerrar conversa
+  btnEncerrar.addEventListener("click", () => {
+    if (!currentConversationId) return;
+    const conv = conversations.find(c => c.id === currentConversationId);
+    const confirmEncerrar = confirm(`Encerrar conversa com ${conv.name}?`);
+    if (confirmEncerrar) {
+      conv.encerrada = true;
+      conv.lastMessage = "(Conversa encerrada)";
+      currentConversationId = null;
+      renderConversationsList();
+      renderChatWindow();
+      updateActionButtons();
+      updateSendMessageArea();
+    }
+  });
+
+  // Enviar mensagem comum
+  btnSend.addEventListener("click", () => {
+    if (!currentConversationId) return;
+    const texto = inputMessage.value.trim();
+    if (!texto) return;
+
+    const conv = conversations.find(c => c.id === currentConversationId);
+    const novaMsg = {
+      id: conv.messages.length + 1,
+      sender: "sent",
+      text: texto,
+      type: "text"
+    };
+    conv.messages.push(novaMsg);
+    conv.lastMessage = texto;
+    inputMessage.value = "";
+
+    renderChatWindow();
+    renderConversationsList();
+  });
+
+  // Enviar mensagem com Enter
+  inputMessage.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      btnSend.click();
+    }
+  });
+
+  // Inicializar
+  renderConversationsList();
+  renderChatWindow();
+  updateActionButtons();
+  updateSendMessageArea();
+</script>
+
+</body>
+</html>

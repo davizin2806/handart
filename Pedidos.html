@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>HandART - Pedidos</title>
+<style>
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    background-color: #f7f2e8;
+    color: #4a2f14;
+  }
+  /* Sidebar */
+  .sidebar {
+    width: 220px;
+    background-color: #d1b58a;
+    height: 100vh;
+    padding: 2rem 1rem;
+    color: #4a2f14;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .sidebar h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+      .sidebar > h2 > img {
+      height: 150px;
+      margin-top: 5px;
+    }
+      .sidebar > div > a{
+      text-decoration: none;
+      font-weight: bold;
+      color: #4a2f14;
+    }
+  .profile-pic {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #b9975b;
+    background-image: url('https://i.pravatar.cc/100');
+    background-size: cover;
+    background-position: center;
+    margin-bottom: 1.5rem;
+    border: 3px solid #fffaf2;
+    box-shadow: 0 0 8px rgba(0,0,0,0.15);
+  }
+  .menu-item {
+    margin: 0.8rem 0;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+    padding: 0.6rem 0;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+  }
+  .menu-item:hover {
+    background-color: #c3a36d;
+    color: #fffaf2;
+  }
+  .menu-item.active {
+    background-color: #b8975a;
+    color: #fffaf2;
+  }
+  
+  /* Main container */
+  .main {
+    margin-left: 220px;
+    padding: 2rem;
+    width: calc(100% - 220px);
+    display: flex;
+    height: 100vh;
+    gap: 2rem;
+    background-color: #fffaf2;
+  }
+  
+  /* Pedidos list */
+  .orders-list {
+    width: 320px;
+    background: #d1b58a;
+    border-radius: 12px;
+    padding: 1rem;
+    overflow-y: auto;
+  }
+  .orders-list h2 {
+    margin-top: 0;
+    color: #4a2f14;
+  }
+  .order-item {
+    background: #fffaf2;
+    padding: 12px 16px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    border-left: 6px solid transparent;
+    transition: border-color 0.3s ease;
+  }
+  .order-item:hover {
+    border-left-color: #b8975a;
+    background: #f0e8d5;
+  }
+  .order-item.active {
+    border-left-color: #4a2f14;
+    background: #e6ddbb;
+  }
+  .order-id {
+    font-weight: bold;
+  }
+  .order-status {
+    margin-top: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #8c5e3c;
+  }
+  .order-date {
+    font-size: 0.8rem;
+    color: #6e5239;
+  }
+
+  /* Detalhes do pedido */
+  .order-detail {
+    flex-grow: 1;
+    background: #fffaf2;
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+  .order-detail h2 {
+    margin-top: 0;
+    color: #4a2f14;
+  }
+  .section {
+    margin-bottom: 1.5rem;
+  }
+  .section h3 {
+    margin-bottom: 0.5rem;
+    border-bottom: 2px solid #b8975a;
+    padding-bottom: 0.3rem;
+  }
+  .buyer-info, .shipping-info {
+    background: #d1b58a;
+    padding: 1rem;
+    border-radius: 10px;
+    color: #4a2f14;
+  }
+  .buyer-info p, .shipping-info p {
+    margin: 6px 0;
+  }
+  
+  /* Produtos no pedido */
+  .products-list {
+    border-top: 1px solid #d1b58a;
+    padding-top: 1rem;
+  }
+  .product-item {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    align-items: center;
+  }
+  .product-image {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    background-color: #d8c7a3;
+  }
+  .product-info {
+    flex-grow: 1;
+  }
+  .product-name {
+    font-weight: bold;
+    margin-bottom: 0.2rem;
+  }
+  .product-qty {
+    font-size: 0.9rem;
+    color: #6e5239;
+  }
+  .product-price {
+    font-weight: 600;
+    color: #8c5e3c;
+  }
+  
+  /* Status select */
+  select {
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1.5px solid #b8975a;
+    font-weight: bold;
+    background-color: #fffaf2;
+    color: #4a2f14;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+  }
+  select:hover, select:focus {
+    border-color: #8c5e3c;
+    outline: none;
+  }
+  
+  /* Botão salvar */
+  .btn-save {
+    margin-top: auto;
+    align-self: flex-start;
+    background-color: #b8975a;
+    color: #fffaf2;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .btn-save:hover {
+    background-color: #8c5e3c;
+  }
+  
+  /* Frete e total */
+  .shipping-info p, .order-total p {
+    font-weight: 600;
+  }
+  .order-total {
+    font-size: 1.3rem;
+    margin-top: 1rem;
+    border-top: 2px solid #b8975a;
+    padding-top: 1rem;
+    color: #4a2f14;
+  }
+  
+  /* Scroll custom */
+  .orders-list::-webkit-scrollbar,
+  .order-detail::-webkit-scrollbar {
+    width: 8px;
+  }
+  .orders-list::-webkit-scrollbar-thumb,
+  .order-detail::-webkit-scrollbar-thumb {
+    background-color: #b8975a;
+    border-radius: 10px;
+  }
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+  <h2><img src="logo-removebg-preview.png" alt=""></h2>
+  <div class="profile-pic" title="Foto do perfil"></div>
+  <div class="menu-item"><a href="home.html">Início</a></div>
+  <div class="menu-item"><a href="MeusProdutos.html">Meus Produtos</a></div>
+  <div class="menu-item"><a href="Chat.html">Chat</a></div>
+  <div class="menu-item"><a href="Perfil.html">Meu Perfil</a></div>
+  <div class="menu-item"><a href="home.html">Sair</a></div>
+</div>
+
+<div class="main">
+  <div class="orders-list">
+    <h2>Pedidos em andamento</h2>
+    <div id="ordersContainer">
+      <!-- Lista de pedidos será inserida aqui via JS -->
+    </div>
+  </div>
+  <div class="order-detail" id="orderDetail">
+    <h2>Selecione um pedido para ver detalhes</h2>
+  </div>
+</div>
+
+<script>
+  const pedidos = [
+    {
+      id: 'HD12345',
+      comprador: {
+        nome: 'Mariana Souza',
+        email: 'mariana.souza@email.com',
+        telefone: '(11) 98765-4321',
+        endereco: 'Rua das Flores, 123, São Paulo - SP'
+      },
+      status: 'Em processamento',
+      frete: {
+        tipo: 'PAC',
+        preco: 20.00,
+        codigoRastreamento: 'BR123456789BR'
+      },
+      produtos: [
+        {
+          id: 1,
+          nome: 'Vaso de Cerâmica Azul',
+          quantidade: 2,
+          precoUnitario: 120.00,
+          imagem: 'https://images.unsplash.com/photo-1590080877777-ec6f2e243dff?auto=format&fit=crop&w=400&q=80'
+        },
+        {
+          id: 2,
+          nome: 'Bolsa de Crochê Natural',
+          quantidade: 1,
+          precoUnitario: 85.50,
+          imagem: 'https://images.unsplash.com/photo-1504198453319-5ce911bafcde?auto=format&fit=crop&w=400&q=80'
+        }
+      ],
+      dataPedido: '2025-05-25'
+    },
+    {
+      id: 'HD12346',
+      comprador: {
+        nome: 'Lucas Mendes',
+        email: 'lucas.mendes@email.com',
+        telefone: '(21) 91234-5678',
+        endereco: 'Av. Brasil, 456, Rio de Janeiro - RJ'
+      },
+      status: 'Enviado',
+      frete: {
+        tipo: 'Sedex',
+        preco: 35.00,
+        codigoRastreamento: 'BR987654321BR'
+      },
+      produtos: [
+        {
+          id: 3,
+          nome: 'Caderno Artesanal',
+          quantidade: 3,
+          precoUnitario: 40.00,
+          imagem: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=400&q=80'
+        }
+      ],
+      dataPedido: '2025-05-23'
+    }
+  ];
+
+  const ordersContainer = document.getElementById('ordersContainer');
+  const orderDetail = document.getElementById('orderDetail');
+  let pedidoSelecionado = null;
+
+  function formatCurrency(value) {
+    return 'R$ ' + value.toFixed(2).replace('.', ',');
+  }
+
+  function renderPedidos() {
+    ordersContainer.innerHTML = '';
+    pedidos.forEach((pedido, index) => {
+      const div = document.createElement('div');
+      div.className = 'order-item' + (pedidoSelecionado === index ? ' active' : '');
+      div.innerHTML = `
+        <div class="order-id">Pedido ${pedido.id}</div>
+        <div class="order-status">${pedido.status}</div>
+        <div class="order-date">${pedido.dataPedido}</div>
+      `;
+      div.onclick = () => {
+        pedidoSelecionado = index;
+        renderPedidos();
+        renderDetalhesPedido(pedidos[index]);
+      };
+      ordersContainer.appendChild(div);
+    });
+  }
+
+  function renderDetalhesPedido(pedido) {
+    orderDetail.innerHTML = `
+      <h2>Pedido ${pedido.id}</h2>
+      <div class="section buyer-info">
+        <h3>Dados do Comprador</h3>
+        <p><strong>Nome:</strong> ${pedido.comprador.nome}</p>
+        <p><strong>Email:</strong> ${pedido.comprador.email}</p>
+        <p><strong>Telefone:</strong> ${pedido.comprador.telefone}</p>
+        <p><strong>Endereço:</strong> ${pedido.comprador.endereco}</p>
+      </div>
+      <div class="section">
+        <h3>Status do Pedido</h3>
+        <select id="statusSelect">
+          <option value="Em processamento" ${pedido.status === 'Em processamento' ? 'selected' : ''}>Em processamento</option>
+          <option value="Preparando para envio" ${pedido.status === 'Preparando para envio' ? 'selected' : ''}>Preparando para envio</option>
+          <option value="Enviado" ${pedido.status === 'Enviado' ? 'selected' : ''}>Enviado</option>
+          <option value="Entregue" ${pedido.status === 'Entregue' ? 'selected' : ''}>Entregue</option>
+          <option value="Cancelado" ${pedido.status === 'Cancelado' ? 'selected' : ''}>Cancelado</option>
+        </select>
+      </div>
+      <div class="section shipping-info">
+        <h3>Informações de Frete</h3>
+        <p><strong>Tipo:</strong> ${pedido.frete.tipo}</p>
+        <p><strong>Preço:</strong> ${formatCurrency(pedido.frete.preco)}</p>
+        <p><strong>Código de Rastreamento:</strong> ${pedido.frete.codigoRastreamento}</p>
+      </div>
+      <div class="section products-list">
+        <h3>Produtos</h3>
+        ${pedido.produtos.map(prod => `
+          <div class="product-item">
+            <img src="${prod.imagem}" alt="${prod.nome}" class="product-image" />
+            <div class="product-info">
+              <div class="product-name">${prod.nome}</div>
+              <div class="product-qty">Quantidade: ${prod.quantidade}</div>
+              <div class="product-price">${formatCurrency(prod.precoUnitario)}</div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+      <div class="order-total">
+        <p><strong>Total:</strong> ${formatCurrency(calcularTotal(pedido))}</p>
+      </div>
+      <button class="btn-save" id="btnSave">Salvar Alterações</button>
+    `;
+
+    // Add event listener para alterar status
+    document.getElementById('btnSave').onclick = () => {
+      const novoStatus = document.getElementById('statusSelect').value;
+      pedido.status = novoStatus;
+      alert('Status do pedido atualizado para: ' + novoStatus);
+      renderPedidos();
+      renderDetalhesPedido(pedido);
+    };
+  }
+
+  function calcularTotal(pedido) {
+    let totalProdutos = pedido.produtos.reduce((sum, p) => sum + (p.precoUnitario * p.quantidade), 0);
+    let total = totalProdutos + pedido.frete.preco;
+    return total;
+  }
+
+  // Inicializar
+  renderPedidos();
+
+</script>
+
+</body>
+</html>

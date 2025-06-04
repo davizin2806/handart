@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>HandART - Adicionar Produto</title>
+<style>
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    background-color: #f7f2e8;
+  }
+  .sidebar {
+    width: 220px;
+    background-color: #d1b58a;
+    height: 100vh;
+    padding: 2rem 1rem;
+    color: #4a2f14;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .sidebar h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+      .sidebar > h2 > img {
+      height: 150px;
+      margin-top: 5px;
+    }
+  .sidebar > div > a{
+  text-decoration: none;
+  font-weight: bold;
+  color: #4a2f14;
+    }
+  .profile-pic {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #b9975b;
+    background-image: url('https://i.pravatar.cc/100');
+    background-size: cover;
+    background-position: center;
+    margin-bottom: 1.5rem;
+    border: 3px solid #fffaf2;
+    box-shadow: 0 0 8px rgba(0,0,0,0.15);
+  }
+  .menu-item {
+    margin: 0.8rem 0;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+    padding: 0.6rem 0;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+  }
+  .menu-item:hover {
+    background-color: #c3a36d;
+    color: #fffaf2;
+  }
+  .menu-item.active {
+    background-color: #b8975a;
+    color: #fffaf2;
+  }
+  .main {
+    margin-left: 220px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 900px;
+  }
+  h1 {
+    color: #4a2f14;
+    margin-bottom: 1rem;
+  }
+  form {
+    background: #fffaf2;
+    padding: 1.5rem 2rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  label {
+    display: block;
+    margin-top: 1rem;
+    font-weight: 600;
+    color: #5a3e1b;
+  }
+  input[type="text"],
+  input[type="number"],
+  textarea,
+  select {
+    width: 100%;
+    padding: 8px 10px;
+    margin-top: 0.4rem;
+    border-radius: 6px;
+    border: 1px solid #c3a36d;
+    font-size: 1rem;
+    font-family: inherit;
+    color: #4a2f14;
+    background: #f7f2e8;
+  }
+  textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+  input[type="checkbox"] {
+    margin-right: 0.5rem;
+    transform: scale(1.1);
+  }
+  .form-row {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+  }
+  .form-row > div {
+    flex: 1;
+    min-width: 150px;
+  }
+  .buttons {
+    margin-top: 1.8rem;
+    display: flex;
+    gap: 1rem;
+  }
+  button {
+    background-color: #d1b58a;
+    color: #4a2f14;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    flex: 1;
+  }
+  button:hover {
+    background-color: #c3a36d;
+  }
+  .product-preview {
+    margin-top: 2rem;
+    background-color: #f0e8d6;
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    box-shadow: inset 0 0 6px #c3a36d;
+  }
+  .product-preview h2 {
+    margin-top: 0;
+    color: #4a2f14;
+  }
+  .product-image-preview {
+    width: 280px;
+    height: 280px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 2px solid #b8975a;
+    background-color: #d8c7a3;
+    margin-bottom: 1rem;
+  }
+  #uploadLabel {
+    display: inline-block;
+    margin-top: 0.5rem;
+    cursor: pointer;
+    color: #4a2f14;
+    text-decoration: underline;
+  }
+  #uploadInput {
+    display: none;
+  }
+  .tags-list {
+    margin-top: 0.3rem;
+    font-size: 0.9rem;
+    color: #7a6240;
+  }
+  .date-info {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: #7a6240;
+  }
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+  <h2><img src="logo-removebg-preview.png" alt=""></h2>
+  <div class="profile-pic" title="Foto do perfil"></div>
+  <div class="menu-item"><a href="home.html">Início</a></div>
+  <div class="menu-item"><a href="MeusProdutos.html">Meus Produtos</a></div>
+  <div class="menu-item active"><a href="Chat.html">Chat</a></div>
+  <div class="menu-item"><a href="Pedidos.html">Pedidos</a></div>
+  <div class="menu-item"><a href="Perfil.html">Meu Perfil</a></div>
+  <div class="menu-item"><a href="home.html">Sair</a></div>
+</div>
+
+<div class="main">
+  <h1>Adicionar Novo Produto</h1>
+  <form id="productForm">
+    <label for="productName">Nome do Produto</label>
+    <input type="text" id="productName" required placeholder="Nome do produto..." />
+
+    <label for="productDescription">Descrição</label>
+    <textarea id="productDescription" placeholder="Descrição detalhada..."></textarea>
+
+    <div class="form-row">
+      <div>
+        <label for="productPrice">Preço (R$)</label>
+        <input type="number" id="productPrice" min="0" step="0.01" required />
+      </div>
+      <div>
+        <label for="productStock">Estoque</label>
+        <input type="number" id="productStock" min="0" step="1" required />
+      </div>
+    </div>
+
+    <label for="productCategory">Categoria</label>
+    <select id="productCategory" required>
+      <option value="">Selecione a categoria</option>
+      <option value="vasos">Vasos</option>
+      <option value="bolsas">Bolsas</option>
+      <option value="cadernos">Cadernos</option>
+      <option value="colar">Colares</option>
+      <option value="outros">Outros</option>
+    </select>
+
+    <label>
+      <input type="checkbox" id="promoActive" />
+      Promoção ativa
+    </label>
+
+    <label for="productTags">Tags (separe por vírgulas)</label>
+    <input type="text" id="productTags" placeholder="ex: sustentável, artesanal, presente" />
+
+    <label for="productImage">Imagem do Produto</label>
+    <img src="https://via.placeholder.com/280x280?text=Imagem+do+Produto" alt="Preview da Imagem" class="product-image-preview" id="productImagePreview" />
+    <label for="uploadInput" id="uploadLabel">Clique para selecionar uma imagem</label>
+    <input type="file" id="uploadInput" accept="image/*" />
+
+    <div class="buttons">
+      <button type="submit" id="btnSave">Adicionar</button>
+      <button type="button" id="btnClear">Limpar</button>
+    </div>
+  </form>
+
+  <div class="product-preview" id="productPreview" style="display:none;">
+    <h2>Visualização do Produto Criado</h2>
+    <img src="" alt="Imagem do Produto" class="product-image-preview" id="previewImage" />
+    <p><strong>Nome:</strong> <span id="previewName"></span></p>
+    <p><strong>Descrição:</strong> <span id="previewDesc"></span></p>
+    <p><strong>Preço:</strong> R$ <span id="previewPrice"></span></p>
+    <p><strong>Estoque:</strong> <span id="previewStock"></span></p>
+    <p><strong>Categoria:</strong> <span id="previewCategory"></span></p>
+    <p><strong>Promoção ativa:</strong> <span id="previewPromo"></span></p>
+    <p><strong>Tags:</strong> <span id="previewTags"></span></p>
+    <p class="date-info" id="dateInfo">Criado em: --/--/----</p>
+  </div>
+</div>
+
+<script>
+  const productForm = document.getElementById('productForm');
+  const productImagePreview = document.getElementById('productImagePreview');
+  const uploadInput = document.getElementById('uploadInput');
+
+  const productPreview = document.getElementById('productPreview');
+  const previewImage = document.getElementById('previewImage');
+  const previewName = document.getElementById('previewName');
+  const previewDesc = document.getElementById('previewDesc');
+  const previewPrice = document.getElementById('previewPrice');
+  const previewStock = document.getElementById('previewStock');
+  const previewCategory = document.getElementById('previewCategory');
+  const previewPromo = document.getElementById('previewPromo');
+  const previewTags = document.getElementById('previewTags');
+  const dateInfo = document.getElementById('dateInfo');
+
+  // Imagem placeholder inicial para o preview
+  const placeholderImg = "https://via.placeholder.com/280x280?text=Imagem+do+Produto";
+
+  uploadInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(ev) {
+      productImagePreview.src = ev.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+
+  productForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    // Coleta dados do formulário
+    const nome = document.getElementById('productName').value.trim();
+    const descricao = document.getElementById('productDescription').value.trim();
+    const preco = parseFloat(document.getElementById('productPrice').value);
+    const estoque = parseInt(document.getElementById('productStock').value, 10);
+    const categoria = document.getElementById('productCategory').value;
+    const promocao = document.getElementById('promoActive').checked;
+    const tags = document.getElementById('productTags').value.split(',').map(t => t.trim()).filter(t => t.length > 0);
+    const imagem = productImagePreview.src === placeholderImg ? "" : productImagePreview.src;
+    const criadoEm = new Date();
+
+    if (!nome || isNaN(preco) || isNaN(estoque) || !categoria) {
+      alert("Por favor, preencha todos os campos obrigatórios corretamente.");
+      return;
+    }
+
+    // Atualiza preview
+    previewName.textContent = nome;
+    previewDesc.textContent = descricao || "(Sem descrição)";
+    previewPrice.textContent = preco.toFixed(2);
+    previewStock.textContent = estoque;
+    previewCategory.textContent = categoria.charAt(0).toUpperCase() + categoria.slice(1);
+    previewPromo.textContent = promocao ? "Sim" : "Não";
+    previewTags.textContent = tags.length > 0 ? tags.join(', ') : "(Nenhuma)";
+    previewImage.src = imagem || placeholderImg;
+    dateInfo.textContent = "Criado em: " + criadoEm.toLocaleDateString('pt-BR');
+
+    productPreview.style.display = "block";
+
+    alert("Produto adicionado com sucesso!");
+  });
+
+  document.getElementById('btnClear').addEventListener('click', () => {
+    productForm.reset();
+    productImagePreview.src = placeholderImg;
+    productPreview.style.display = "none";
+  });
+</script>
+
+</body>
+</html>

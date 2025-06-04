@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>HandART - Meu Perfil</title>
+<style>
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    background-color: #f7f2e8;
+    color: #4a2f14;
+  }
+
+  .sidebar {
+    width: 220px;
+    background-color: #d1b58a;
+    height: 100vh;
+    padding: 2rem 1rem;
+    color: #4a2f14;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .sidebar h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+      .sidebar > h2 > img {
+      height: 150px;
+      margin-top: 5px;
+    }
+      .sidebar > div > a{
+      text-decoration: none;
+      font-weight: bold;
+      color: #4a2f14;
+    }
+  .profile-pic {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #b9975b;
+    background-image: url('https://i.pravatar.cc/100?img=32');
+    background-size: cover;
+    background-position: center;
+    margin-bottom: 1.5rem;
+    border: 3px solid #fffaf2;
+    box-shadow: 0 0 8px rgba(0,0,0,0.15);
+  }
+  .menu-item {
+    margin: 0.8rem 0;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+    padding: 0.6rem 0;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+  }
+  .menu-item:hover {
+    background-color: #c3a36d;
+    color: #fffaf2;
+  }
+  .menu-item.active {
+    background-color: #b8975a;
+    color: #fffaf2;
+  }
+
+
+  .main {
+    margin-left: 220px;
+    padding: 2rem;
+    width: calc(100% - 220px);
+    background-color: #fffaf2;
+    height: 100vh;
+    overflow-y: auto;
+  }
+
+  h1 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: #4a2f14;
+  }
+
+
+  form {
+    background: #d1b58a;
+    padding: 2rem;
+    border-radius: 12px;
+    max-width: 900px;
+    margin: 0 auto 3rem auto;
+    color: #4a2f14;
+  }
+
+  fieldset {
+    border: none;
+    margin-bottom: 2rem;
+  }
+
+  legend {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #b8975a;
+    padding-bottom: 0.3rem;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 0.3rem;
+    font-weight: 600;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="number"],
+  input[type="date"],
+  select {
+    width: 100%;
+    padding: 8px 12px;
+    margin-bottom: 1rem;
+    border-radius: 6px;
+    border: 1.5px solid #b8975a;
+    background-color: #fffaf2;
+    color: #4a2f14;
+    font-weight: 600;
+    transition: border-color 0.3s ease;
+  }
+
+  input[type="text"]:focus,
+  input[type="email"]:focus,
+  input[type="tel"]:focus,
+  input[type="number"]:focus,
+  input[type="date"]:focus,
+  select:focus {
+    border-color: #8c5e3c;
+    outline: none;
+  }
+
+  .two-columns {
+    display: flex;
+    gap: 2rem;
+  }
+  .two-columns > div {
+    flex: 1;
+  }
+
+  /* Botão */
+  button {
+    background-color: #b8975a;
+    color: #fffaf2;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  button:hover {
+    background-color: #8c5e3c;
+  }
+
+  
+  .history {
+    background: #d1b58a;
+    padding: 1.5rem;
+    border-radius: 12px;
+    max-width: 900px;
+    margin: 0 auto;
+    color: #4a2f14;
+  }
+
+  .history h2 {
+    margin-top: 0;
+    border-bottom: 2px solid #b8975a;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .history-item {
+    background: #fffaf2;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+  }
+
+  .history-item strong {
+    display: inline-block;
+    width: 130px;
+  }
+
+  
+  @media(max-width: 720px) {
+    .two-columns {
+      flex-direction: column;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+  <h2><img src="logo-removebg-preview.png" alt=""></h2>
+  <div class="profile-pic" title="Foto do perfil"></div>
+  <div class="menu-item"><a href="home.html">Início</a></div>
+  <div class="menu-item"><a href="MeusProdutos.html">Meus Produtos</a></div>
+  <div class="menu-item"><a href="Chat.html">Chat</a></div>
+  <div class="menu-item"><a href="Pedidos.html">Pedidos</a></div>
+  <div class="menu-item"><a href="login.html">Sair</a></div>
+</div>
+
+<div class="main">
+  <h1>Meu Perfil - Ateliê de Artesanato Souza Ltda</h1>
+  <form id="profileForm">
+
+    <fieldset>
+      <legend>Dados Cadastrais</legend>
+      <div class="two-columns">
+        <div>
+          <label for="razaoSocial">Razão Social</label>
+          <input type="text" id="razaoSocial" name="razaoSocial" required value="Ateliê de Artesanato Souza Ltda" />
+        </div>
+        <div>
+          <label for="nomeFantasia">Nome Fantasia</label>
+          <input type="text" id="nomeFantasia" name="nomeFantasia" required value="Ateliê Souza" />
+        </div>
+      </div>
+      <div class="two-columns">
+        <div>
+          <label for="cnpj">CNPJ</label>
+          <input type="text" id="cnpj" name="cnpj" maxlength="18" placeholder="00.000.000/0000-00" required value="12.345.678/0001-90" />
+        </div>
+        <div>
+          <label for="inscricaoEstadual">Inscrição Estadual</label>
+          <input type="text" id="inscricaoEstadual" name="inscricaoEstadual" value="123.456.789.000" />
+        </div>
+      </div>
+      <label for="email">E-mail</label>
+      <input type="email" id="email" name="email" required value="contato@atelierdesouza.com.br" />
+
+      <div class="two-columns">
+        <div>
+          <label for="telefoneComercial">Telefone Comercial</label>
+          <input type="tel" id="telefoneComercial" name="telefoneComercial" maxlength="15" placeholder="(00) 0000-0000" value="(11) 2345-6789" />
+        </div>
+        <div>
+          <label for="celular">Celular</label>
+          <input type="tel" id="celular" name="celular" maxlength="15" placeholder="(00) 90000-0000" value="(11) 99876-5432" />
+        </div>
+      </div>
+
+      <label for="endereco">Endereço Comercial</label>
+      <input type="text" id="endereco" name="endereco" required value="Rua das Flores, 123, Jardim das Artes, São Paulo - SP, 01234-567" />
+    </fieldset>
+
+    <fieldset>
+      <legend>Dados Bancários para Recebimento</legend>
+      <div class="two-columns">
+        <div>
+          <label for="banco">Banco</label>
+          <select id="banco" name="banco" required>
+            <option value="">Selecione o banco</option>
+            <option value="001" selected>Banco do Brasil (001)</option>
+            <option value="033">Santander (033)</option>
+            <option value="104">Caixa Econômica Federal (104)</option>
+            <option value="237">Bradesco (237)</option>
+            <option value="341">Itaú (341)</option>
+            <option value="356">Real (356)</option>
+          </select>
+        </div>
+        <div>
+          <label for="agencia">Agência</label>
+          <input type="text" id="agencia" name="agencia" maxlength="10" required value="1234" />
+        </div>
+      </div>
+      <div class="two-columns">
+        <div>
+          <label for="conta">Conta Corrente</label>
+          <input type="text" id="conta" name="conta" maxlength="15" required value="12345-6" />
+        </div>
+        <div>
+          <label for="tipoConta">Tipo de Conta</label>
+          <select id="tipoConta" name="tipoConta" required>
+            <option value="corrente" selected>Corrente</option>
+            <option value="poupanca">Poupança</option>
+          </select>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Documentos</legend>
+      <label for="docContratoSocial">Contrato Social (PDF)</label>
+      <input type="file" id="docContratoSocial" name="docContratoSocial" accept="application/pdf" />
+      <small>Arquivo atual: contrato_social_atelier.pdf</small>
+
+      <label for="docCertidaoNegativa">Certidão Negativa de Débitos (PDF)</label>
+      <input type="file" id="docCertidaoNegativa" name="docCertidaoNegativa" accept="application/pdf" />
+      <small>Arquivo atual: certidao_negativa.pdf</small>
+    </fieldset>
+
+    <fieldset>
+      <legend>Configurações</legend>
+      <label for="preferenciasEmail">Preferências de E-mail</label>
+      <select id="preferenciasEmail" name="preferenciasEmail">
+        <option value="todas" selected>Receber todas notificações</option>
+        <option value="pedidos">Notificações apenas de pedidos</option>
+        <option value="mensagens">Notificações apenas de mensagens</option>
+        <option value="nenhuma">Não receber notificações</option>
+      </select>
+
+      <label for="senha">Alterar senha</label>
+      <input type="password" id="senha" name="senha" placeholder="Nova senha" />
+      <input type="password" id="confSenha" name="confSenha" placeholder="Confirme a nova senha" />
+    </fieldset>
+
+    <button type="submit">Salvar alterações</button>
+  </form>
+
+  <section class="history">
+    <h2>Resumo da Conta</h2>
+    <div class="history-item">
+      <p><strong>Data de cadastro:</strong> 10/03/2023</p>
+      <p><strong>Total de pedidos realizados:</strong> 124</p>
+      <p><strong>Pedidos entregues:</strong> 118</p>
+      <p><strong>Pedidos em andamento:</strong> 6</p>
+      <p><strong>Avaliação média dos clientes:</strong> ⭐ 4.8 / 5</p>
+    </div>
+    <div class="history-item">
+      <p><strong>Faturamento acumulado:</strong> R$ 58.450,00</p>
+      <p><strong>Saldo disponível para saque:</strong> R$ 3.200,00</p>
+      <p><strong>Último saque realizado:</strong> 20/05/2025</p>
+    </div>
+  </section>
+</div>
+
+<script>
+  const form = document.getElementById('profileForm');
+
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    // Validação simples senha
+    const senha = form.senha.value;
+    const confSenha = form.confSenha.value;
+    if (senha || confSenha) {
+      if (senha !== confSenha) {
+        alert('As senhas não coincidem.');
+        return;
+      }
+    }
+
+    // Aqui você pode fazer a chamada para backend para salvar os dados
+
+    alert('Dados do perfil atualizados com sucesso!');
+  });
+
+  // Máscara simples para CNPJ
+  const cnpjInput = document.getElementById('cnpj');
+  cnpjInput.addEventListener('input', function(e) {
+    let v = e.target.value.replace(/\D/g, '');
+    if (v.length > 14) v = v.slice(0,14);
+
+    v = v.replace(/^(\d{2})(\d)/, '$1.$2');
+    v = v.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
+    v = v.replace(/\.(\d{3})(\d)/, '.$1/$2');
+    v = v.replace(/(\d{4})(\d)/, '$1-$2');
+
+    e.target.value = v;
+  });
+
+  // Máscara simples para telefone
+  function phoneMask(value) {
+    value = value.replace(/\D/g, '');
+    if (value.length > 11) value = value.slice(0,11);
+    if (value.length <= 10) {
+      value = value.replace(/^(\d{2})(\d{4})(\d{0,4})$/, '($1) $2-$3');
+    } else {
+      value = value.replace(/^(\d{2})(\d{5})(\d{0,4})$/, '($1) $2-$3');
+    }
+    return value;
+  }
+
+  const telComInput = document.getElementById('telefoneComercial');
+  telComInput.addEventListener('input', e => {
+    e.target.value = phoneMask(e.target.value);
+  });
+
+  const celularInput = document.getElementById('celular');
+  celularInput.addEventListener('input', e => {
+    e.target.value = phoneMask(e.target.value);
+  });
+</script>
+
+</body>
+</html>

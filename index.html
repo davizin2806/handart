@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HandART - Artesanato com Propósito</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    body {
+      background-color: #fdfaf6;
+      color: #3c2f2f;
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: #fff3e6;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo img {
+      height: 200px;
+    }
+
+    .hero {
+      padding: 3rem 1rem;
+      text-align: center;
+      background: url('https://source.unsplash.com/1600x600/?handmade,craft') no-repeat center center/cover;
+      color: white;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      text-shadow: 1px 1px 4px #000;
+    }
+
+    .hero p {
+      max-width: 600px;
+      margin: 0 auto 2rem;
+      font-size: 1.2rem;
+      text-shadow: 1px 1px 3px #000;
+    }
+
+    .cta {
+      display: inline-block;
+      background-color: #a66c3b;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    .cta:hover {
+      background-color: #8d5831;
+    }
+
+    .about {
+      padding: 4rem 2rem;
+      background-color: #fff;
+      text-align: center;
+    }
+
+    .about h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: #5c4033;
+    }
+
+    .about p {
+      max-width: 800px;
+      margin: 0 auto;
+      font-size: 1.1rem;
+    }
+
+    .features {
+      background-color: #f9f1e7;
+      padding: 4rem 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      text-align: center;
+    }
+
+    .feature {
+      background-color: #fff3e6;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .feature img {
+      width: 60px;
+      margin-bottom: 1rem;
+    }
+
+    .feature h3 {
+      margin-bottom: 1rem;
+      color: #a66c3b;
+    }
+
+    footer {
+      background-color: #3c2f2f;
+      color: white;
+      padding: 2rem 1rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="logo-removebg-preview.png" alt="Logo HandART" />
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1>Conectando Artesãos ao Mundo Digital</h1>
+    <p>Uma plataforma feita para valorizar o trabalho manual, facilitar vendas e promover o comércio justo.</p>
+    <a href="login.html" class="cta">Quero Participar</a>
+  </section>
+
+  <section class="about">
+    <h2>Sobre o Projeto</h2>
+    <p>O HandART é uma plataforma de e-commerce criada especialmente para artesãos e profissionais manuais. Nosso objetivo é oferecer uma vitrine digital intuitiva e acessível, onde cada criador pode vender, contar sua história e se conectar com clientes de forma autêntica.</p>
+  </section>
+
+  <section class="features">
+    <div class="feature">
+      <img src="https://cdn-icons-png.flaticon.com/512/2972/2972472.png" alt="Loja" />
+      <h3>Loja Online Simples</h3>
+      <p>Cadastre seus produtos facilmente e comece a vender sem complicações.</p>
+    </div>
+    <div class="feature">
+      <img src="https://cdn-icons-png.flaticon.com/512/1828/1828961.png" alt="Blog" />
+      <h3>Blog do Artesão</h3>
+      <p>Compartilhe histórias, bastidores e processos criativos para se aproximar do seu público.</p>
+    </div>
+    <div class="feature">
+      <img src="https://cdn-icons-png.flaticon.com/512/561/561127.png" alt="Chat" />
+      <h3>Chat com Clientes</h3>
+      <p>Receba pedidos personalizados, tire dúvidas e crie um atendimento mais humano.</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 HandART. Todos os direitos reservados.</p>
+  </footer>
+</body>
+</html>

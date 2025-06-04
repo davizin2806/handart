@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - HandART</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f7f2e8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    
+    .container {
+      background-color: #fffaf2;
+      border: 2px solid #d1b58a;
+      border-radius: 16px;
+      padding: 2rem;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+      text-align: center;
+    }
+
+    .logo {
+      font-size: 2rem;
+      color: #8c5e3c;
+      font-weight: bold;
+      margin-bottom: 1.5rem;
+      height: 150px;
+      margin: 10px 10px 10px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 50px;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 10px 10px 0.1px;
+      box-sizing: border-box;
+      border: 1px solid #d1b58a;
+      border-radius: 8px;
+      background-color: #fffdf7;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #d1b58a;
+      color: #4a2f14;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      margin: 1px 1px 1px 1px;
+      
+    }
+
+    button:hover {
+      background-color: #c3a36d;
+    }
+
+    button > a{
+      text-decoration: none;
+      font-weight: bold;
+      color: #4a2f14;
+    }
+
+    .link {
+      margin-top: 1rem;
+      display: block;
+      color: #8c5e3c;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    .link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo"> <img id="imagem_login" src="logo-removebg-preview.png" alt="Logo"></div>
+    <form>
+      <input type="email" placeholder="E-mail" required />
+      <input type="password" placeholder="Senha" required />
+      <button type="submit"><a href="home.html" id="entrar">Entrar</a></button>
+    </form>
+    <a href="cadastro.html" class="link">Ainda não tem conta? Cadastre-se</a>
+  </div>
+</body>
+</html>
